@@ -1,0 +1,6 @@
+#Ignorar bd local
+db/database.sqlite
+
+#Ignorar node_modules
+node_modules
+package-lock.json
