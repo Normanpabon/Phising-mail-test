@@ -1,10 +1,19 @@
 #Ignorar bd local
 db/database.sqlite
 personas.sqlite
+database.sqlite
+API/db/database.sqlite
 
 #Ignorar node_modules
 node_modules
 package-lock.json
 
 #Ignorar listado perosnas
-#personas.csv
+personas.csv
+config.json
+
+#Ignorar archivos de configuración
+APP/config.json
+
+APP/src/csvReport.js
+APP/reporte.csv

@@ -3,17 +3,17 @@ const { insertRequest } = require('./db');
 
 const router = express.Router();
 
-// POST /API/Phis/:id
-router.post('/Phis/:id', (req, res) => {
+// GET /API/Phis/:id
+router.get('/Phis/:id', (req, res) => {
     const requestId = req.params.id;
     const ipAddress = req.ip;
 
     insertRequest(requestId, ipAddress);
-    res.status(201).send({ message: `Registro guardado con id: ${requestId}` });
+    res.send({ message: `Registro guardado con id: ${requestId}` });
 });
 
 // GET /API/Phis/Health
-router.get('/Phis', (req, res) => {
+router.get('/Phis/Health', (req, res) => {
     res.send('API funcionando correctamente');
 });
 

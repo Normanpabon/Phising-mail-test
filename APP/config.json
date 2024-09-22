@@ -1,8 +1,12 @@
 {
+  "server": {
+    "host": "127.0.0.1",
+    "port": 3012
+  },
   "email": {
     "fromEmail": "correo@gmail.com",
     "useGoogle": true,
-    "password": "clave"
+    "password": "clave segura"
   },
   "message": {
     "subject": "Has ganado un bono de MercadoLibre",

@@ -2,6 +2,7 @@ const { parseCsv } = require('./src/csvParser');
 const { insertPerson, updatePersonOpenedEmail, db } = require('./src/dbHandler');
 const { sendEmail } = require('./src/emailSender');
 const { askForAction, askForEmailDetails, askForApiConfirmation } = require('./src/promptHandler');
+const { generateCsvReport } = require('./src/csvReport');
 const path = require('path');
 const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
@@ -21,6 +22,7 @@ async function main() {
         if (config.email.useGoogle) {
             fromEmail = config.email.fromEmail;
             password = config.email.password;
+            console.log('Usando configuración de Google', fromEmail, password);
             smtpConfig = {
                 service: 'gmail',
                 auth: {
@@ -33,13 +35,23 @@ async function main() {
             const emailDetails = await askForEmailDetails();
             fromEmail = emailDetails.fromEmail;
             smtpConfig = emailDetails.smtp ? {
-                service: 'gmail',
+                //service: 'gmail',
+                host: 'smtp.gmail.com',
+                port: 465, // Puerto para STARTTLS
+                secure: true, // Usar STARTTLS en lugar de SSL
                 auth: {
                     user: fromEmail,
                     pass: emailDetails.password
-                }
+                },
             } : null;
         }
+
+        let host, port;
+
+        // Cargar info del servidor desde el archivo de configuración
+
+        host = config.server.host;
+        port = config.server.port;
 
         const people = await parseCsv();
 
@@ -48,7 +60,7 @@ async function main() {
     
             const emailContent = `
                 <p>${config.message.body}</p>
-                <p><a href="http://192.168.2.13/API/BONO/${id}">Reclama tu bono aquí</a></p>
+                <p><a href="http://${host}:${port}/API/Phis/${id}">Reclama tu bono aquí</a></p>
             `;
     
             // Verifica que `person.email` tiene un valor válido antes de enviar
@@ -58,28 +70,16 @@ async function main() {
                 console.error(`Correo no válido para ${person.nombre}`);
             }
         }
-    } else if (action === 'Procesar datos') {
+    } else if (action === 'Generar reporte') {
         const confirmed = await askForApiConfirmation();
 
         if (confirmed) {
-            const apiDbPath = path.resolve(__dirname, '../API/DB/database.sqlite');
-            const apiDb = new sqlite3.Database(apiDbPath);
-
-            apiDb.all(`SELECT * FROM requests`, [], async (err, rows) => {
-                if (err) throw err;
-
-                for (const row of rows) {
-                    const requestId = row.request_id;
-                    const timestamp = row.timestamp;
-
-                    const query = `SELECT * FROM personas WHERE id = ?`;
-                    db.get(query, [requestId], async (err, person) => {
-                        if (person) {
-                            await updatePersonOpenedEmail(requestId, timestamp);
-                        }
-                    });
-                }
-            });
+            try {
+                const report = await generateCsvReport();
+                console.log(`Reporte generado: ${report.totalCorreos} correos enviados, ${report.correosAbiertos} abiertos (${report.porcentajeAbiertos}%).`);
+            } catch (error) {
+                console.error('Error al generar el reporte:', error);
+            }
         } else {
             console.log('Operación cancelada.');
         }

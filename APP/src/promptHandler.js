@@ -6,7 +6,7 @@ async function askForAction() {
             type: 'list',
             name: 'action',
             message: '¿Qué deseas hacer?',
-            choices: ['Enviar correos', 'Procesar datos'],
+            choices: ['Enviar correos', 'Generar reporte'],
         },
     ]);
     return action;
