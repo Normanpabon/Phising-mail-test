@@ -1,6 +1,10 @@
 #Ignorar bd local
 db/database.sqlite
+personas.sqlite
 
 #Ignorar node_modules
 node_modules
 package-lock.json
+
+#Ignorar listado perosnas
+#personas.csv

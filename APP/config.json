@@ -1,0 +1,11 @@
+{
+  "email": {
+    "fromEmail": "correo@gmail.com",
+    "useGoogle": true,
+    "password": "clave"
+  },
+  "message": {
+    "subject": "Has ganado un bono de MercadoLibre",
+    "body": "Felicidades, has ganado un bono de MercadoLibre! Reclámalo haciendo clic en el siguiente enlace."
+  }
+}
