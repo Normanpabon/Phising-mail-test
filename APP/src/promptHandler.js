@@ -6,7 +6,7 @@ async function askForAction() {
             type: 'list',
             name: 'action',
             message: '¿Qué deseas hacer?',
-            choices: ['Enviar correos', 'Generar reporte'],
+            choices: ['Enviar correos', 'Generar reporte', 'Limpiar datos'],
         },
     ]);
     return action;
@@ -40,7 +40,7 @@ async function askForApiConfirmation() {
         {
             type: 'confirm',
             name: 'confirm',
-            message: '¿La API está detenida? (Debe estarlo para procesar los datos)',
+            message: '¿La API está detenida? (Debe estarlo para realizar esta acción)',
         },
     ]);
 

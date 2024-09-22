@@ -83,6 +83,28 @@ async function main() {
         } else {
             console.log('Operación cancelada.');
         }
+    } else if (action === 'Limpiar datos') {
+        const confirmed = await askForApiConfirmation();
+
+        if (confirmed) {
+            fs.unlink(path.resolve(__dirname, './db/personas.sqlite'), (err) => {
+                if (err) {
+                    console.error('Error al limpiar los datos');
+                } else {
+                    console.log('Datos limpiados correctamente.');
+                }
+            });
+            fs.unlink(path.resolve(__dirname, '../API/db/database.sqlite'), (err) => {
+                if (err) {
+                    console.error('Error al limpiar los datos');
+                } else {
+                    console.log('Datos limpiados correctamente.');
+                }
+            });
+        } else {
+            console.log('Operación cancelada.');
+        }
+
     }
 }
 
