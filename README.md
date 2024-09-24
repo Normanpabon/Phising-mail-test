@@ -118,6 +118,7 @@ Durante la ejecución, la aplicación te pedirá confirmar las acciones a realiz
 - Recibir los codigos de autenticacion de usuarios en la API generados por la app, una vez se reciba dicha peticion con el codigo, marcar el codigo como usado.
 - Si el archivo de configuracion no existe, escribir en el archivo 'config.json' del APP, la configuracion dada por el usuario. (APP)
 - Manejo de mensajes de error en caso de no encontrar listado de personas o error de lectura del listado.
+- Manejo de errores para los json de configuracion
 - Verificar la creacion de certificado con SSL en Linux.
 
 ## Contribuciones

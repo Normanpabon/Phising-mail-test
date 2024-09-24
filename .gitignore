@@ -13,7 +13,6 @@ personas.csv
 config.json
 
 #Ignorar archivos de configuración
-APP/config.json
+#APP/config.json
 
-APP/src/csvReport.js
 APP/reporte.csv
