@@ -35,7 +35,21 @@ Para usar esta herramienta, necesitas tener **Node.js** instalado en tu sistema.
    npm install
    ```
 
-## Configuración
+## Configuración API REST
+Antes de ejecutar la herramienta, debes configurar correctamente el archivo `config.json` para la API REST, encargada de la recepcion de peticiones por parte de los usuarios. El formato de `config.json` es el siguiente:
+
+```json
+{
+    "server": {
+        "host": "0.0.0.0",
+        "httpPort": 3012,
+        "httpsPort": 3443
+    }
+}
+```
+- **`server`**: Configura la direccion IPV4 publica del servidor y los puertos HTTP y HTTPS de escucha de conexiones.
+
+## Configuración APP
 
 Antes de ejecutar la herramienta, debes configurar correctamente el archivo `config.json` para la aplicación de envío de correos. Este archivo debe contener la configuración del servidor y de los correos electrónicos que se enviarán. El formato del archivo `config.json` es el siguiente:
 
@@ -57,12 +71,13 @@ Antes de ejecutar la herramienta, debes configurar correctamente el archivo `con
 }
 ```
 
-- **`server`**: Configura la dirección y puerto del servidor REST API.
+- **`server`**: Configura la dirección y puerto del servidor REST API para el envio del correo que apunta a dicho servidor.
 - **`email`**: Configura el correo remitente (puede ser una cuenta de Gmail o un servidor local en Linux). Si `useGoogle` es `true`, se utilizará Gmail y la contraseña debe proporcionarse.
 - **`message`**: Contiene el asunto y el cuerpo del mensaje que será enviado a los empleados.
 
 ### Nota:
 En **Windows**, debido a la limitación de la librería `sendmail`, el envío de correos se realiza exclusivamente a través de cuentas de Gmail. En **Linux**, es posible enviar correos directamente desde el servidor local.
+
 
 ## Ejecución
 
@@ -100,6 +115,10 @@ Durante la ejecución, la aplicación te pedirá confirmar las acciones a realiz
 ## ToDo
 
 - Generar identificador unico para la peticion de cada empleado, para evitar datos repetidos y/o erroneos si se reciben peticiones de otras fuentes.
+- Recibir los codigos de autenticacion de usuarios en la API generados por la app, una vez se reciba dicha peticion con el codigo, marcar el codigo como usado.
+- Si el archivo de configuracion no existe, escribir en el archivo 'config.json' del APP, la configuracion dada por el usuario. (APP)
+- Manejo de mensajes de error en caso de no encontrar listado de personas o error de lectura del listado.
+- Verificar la creacion de certificado con SSL en Linux.
 
 ## Contribuciones
 

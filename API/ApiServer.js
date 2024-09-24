@@ -4,9 +4,14 @@ const https = require('https');
 const path = require('path');
 const app = require('./src/app');
 
+// Cargar configuracion de variables de entorno
+const configPath = path.resolve(__dirname, './config.json');
+const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+
 // Puertos para HTTP y HTTPS
-const HTTP_PORT = 3012;
-const HTTPS_PORT = 3443;
+const HTTP_PORT = config.server.httpPort;
+const HTTPS_PORT = config.server.httpsPort;
+const HOST_IP = config.server.host;
 
 // Ruta certificados SSL
 const certPath = path.resolve(__dirname, 'certs');
@@ -47,15 +52,15 @@ if (certExists) {
 
 
 // Iniciar el servidor HTTP siempre
-http.createServer(app).listen(HTTP_PORT, '0.0.0.0', () => {
+http.createServer(app).listen(HTTP_PORT, HOST_IP, () => {
     console.log('-------------------------------------------------------------');
-    console.log(`\n\nServidor HTTP corriendo en http://IpServidor:${HTTP_PORT}`);
+    console.log(`\n\nServidor HTTP corriendo en http://${HOST_IP}:${HTTP_PORT}`);
 });
 
 // Solo iniciar el servidor HTTPS si tenemos certificados válidos
 if (options.key && options.cert) {
-    https.createServer(options, app).listen(HTTPS_PORT, '0.0.0.0', () => {
-        console.log(`\nServidor HTTPS corriendo en https://IpServidor:${HTTPS_PORT}`);
+    https.createServer(options, app).listen(HTTPS_PORT, HOST_IP, () => {
+        console.log(`\nServidor HTTPS corriendo en https://${HOST_IP}:${HTTPS_PORT}`);
     });
 } else {
     console.warn(`No se encontraron certificados, El API funcionara unicamente con http en el puerto ${HTTP_PORT}.`);
