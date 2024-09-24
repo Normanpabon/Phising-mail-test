@@ -5,7 +5,7 @@ const dbPath = path.resolve(__dirname, '../db/database.sqlite');
 
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
-        console.error('Error opening database', err);
+        console.error('Error abriendo la BD', err);
     } else {
         db.run(`
             CREATE TABLE IF NOT EXISTS UsersRegs (
@@ -19,7 +19,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 function insertRequest(requestId, ipAddress) {
-    const query = `INSERT INTO UsersRegs (request_id, ip_address) VALUES (?, ?)`;
+    const query = `INSERT INTO UsersRegs (request_id, ip_address_user) VALUES (?, ?)`;
     db.run(query, [requestId, ipAddress], (err) => {
         if (err) {
             console.error('Error ingresando datos', err);
