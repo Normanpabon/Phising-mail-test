@@ -1,7 +1,21 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const fs = require('fs');
 
-const dbPath = path.resolve(__dirname, '../db/personas.sqlite');
+// Ruta de la carpeta y archivo de la base de datos
+const dbDirPath = path.resolve(__dirname, '../db');
+const dbPath = path.resolve(dbDirPath, 'personas.sqlite');
+
+// Verificar si la carpeta 'db' existe, si no, crearla
+if (!fs.existsSync(dbDirPath)) {
+    fs.mkdirSync(dbDirPath, { recursive: true });
+    console.log(`Carpeta ${dbDirPath} creada.`);
+}
+
+// Verificar si la base de datos 'personas.sqlite' existe
+if (!fs.existsSync(dbPath)) {
+    console.log(`La base de datos ${dbPath} no existe. Creando la base de datos...`);
+}
 
 // Inicializar la base de datos
 const db = new sqlite3.Database(dbPath, (err) => {

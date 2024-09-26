@@ -89,16 +89,16 @@ async function main() {
         if (confirmed) {
             fs.unlink(path.resolve(__dirname, './db/personas.sqlite'), (err) => {
                 if (err) {
-                    console.error('Error al limpiar los datos');
+                    console.error('Error al limpiar la bd personas.sqlite.');
                 } else {
-                    console.log('Datos limpiados correctamente.');
+                    console.log('Datos de la APP limpiados correctamente.');
                 }
             });
-            fs.unlink(path.resolve(__dirname, '../API/db/database.sqlite'), (err) => {
+            fs.unlink(path.resolve(__dirname, '../API/db/database.sqlite.'), (err) => {
                 if (err) {
-                    console.error('Error al limpiar los datos');
+                    console.error('Error al limpiar la bd de la API');
                 } else {
-                    console.log('Datos limpiados correctamente.');
+                    console.log('Datos de la API limpiados correctamente.');
                 }
             });
         } else {
